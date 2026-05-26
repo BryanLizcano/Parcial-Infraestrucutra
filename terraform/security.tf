@@ -2,14 +2,7 @@
 # Data Sources - Security Groups
 # ==========================================
 data "aws_security_group" "web_sg" {
-  filter {
-    name   = "group-name"
-    values = [var.web_sg_name]
-  }
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.lab_vpc.id]
-  }
+  id = "sg-01b38692fccb71ca8" # Pon tu ID REAL aquí
 }
 
 # ==========================================

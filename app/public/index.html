@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Balanceo de Carga</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="status-card" aria-live="polite">
+        <div class="status-header">
+          <div>
+            <p class="eyebrow">Infraestructura HTTP</p>
+            <h1>Servidor activo</h1>
+          </div>
+          <span class="pulse" aria-label="Servidor activo"></span>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card hostname-card">
+            <span class="label">Hostname</span>
+            <strong id="hostname">Cargando...</strong>
+          </article>
+
+          <article class="info-card ip-card">
+            <span class="label">IP del servidor</span>
+            <strong id="server-ip">Cargando...</strong>
+          </article>
+
+          <article class="info-card">
+            <span class="label">Instancia</span>
+            <strong id="instance-name">Cargando...</strong>
+          </article>
+
+          <article class="info-card">
+            <span class="label">Hora del servidor</span>
+            <strong id="timestamp">Cargando...</strong>
+          </article>
+        </div>
+
+        <footer class="card-footer">
+          <span id="refresh-status">Actualizando cada 5 segundos</span>
+        </footer>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

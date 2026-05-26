@@ -1,0 +1,39 @@
+name: CI/CD Pipeline - Infraestructura y App
+
+on:
+  push:
+    branches:
+      - main # Se ejecuta automáticamente al hacer push a main
+
+jobs:
+  deploy:
+    name: Desplegar en AWS
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    steps:
+      - name: 🛎️ Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Configurar credenciales de AWS (Sandbox)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # Obligatorio en AWS Academy
+          aws-region: us-east-1
+
+      - name: 🏗️ Configurar Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: 🚀 Inicializar Terraform
+        run: terraform init
+
+      - name: 🔍 Validar y Planificar
+        run: terraform plan -out=tfplan
+
+      - name: ✅ Aplicar Cambios Automáticamente
+        run: terraform apply -auto-approve tfplan

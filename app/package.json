@@ -1,0 +1,25 @@
+{
+  "name": "load-balancer-demo",
+  "version": "1.0.0",
+  "description": "Aplicacion web demo para identificar la instancia que responde una peticion HTTP.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "load-balancer",
+    "infraestructura",
+    "demo"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

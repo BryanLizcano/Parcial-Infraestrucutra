@@ -2,7 +2,7 @@
 # Data Sources - Security Groups
 # ==========================================
 data "aws_security_group" "web_sg" {
-  id = "sg-02a8dd336169d0545" # Pon tu ID REAL aquí
+  id = "sg-0dc53b31e3a3d26e4" # Pon tu ID REAL aquí
 }
 
 # ==========================================

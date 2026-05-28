@@ -36,7 +36,21 @@ data "aws_subnet" "existing_public" {
   id = data.aws_subnets.public.ids[0]
 }
 
-# 3. Creamos nuestra subred garantizando una Zona de Disponibilidad DIFERENTE
+# AQUÍ ESTÁ EL BLOQUE QUE FALTABA PARA EL OUTPUT.TF
+data "aws_subnets" "private" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.lab_vpc.id]
+  }
+  filter {
+    name   = "map-public-ip-on-launch"
+    values = ["false"]
+  }
+}
+
+# ==========================================
+# Creación de Subredes Adicionales
+# ==========================================
 resource "aws_subnet" "public_subnet_2" {
   vpc_id                  = data.aws_vpc.lab_vpc.id
   cidr_block              = "10.0.1.0/24"

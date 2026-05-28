@@ -26,6 +26,20 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
 
+      # --- NUEVO PASO: BOOTSTRAPPING DEL BUCKET S3 ---
+      - name: 🪣 Preparar Bucket S3 para Terraform State
+        run: |
+          BUCKET_NAME="upb-parcial-backend-terraform-bryan"
+          
+          # AWS CLI pregunta silenciosamente si el bucket ya existe
+          if ! aws s3api head-bucket --bucket $BUCKET_NAME 2>/dev/null; then
+            echo "El bucket no existe. Creando infraestructura de estado..."
+            aws s3 mb s3://$BUCKET_NAME --region us-east-1
+          else
+            echo "El bucket ya existe. Procediendo con Terraform..."
+          fi
+      # -----------------------------------------------
+
       - name: 🏗️ Configurar Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -35,5 +49,5 @@ jobs:
       - name: 🔍 Validar y Planificar
         run: terraform plan -out=tfplan
 
-      - name: ✅ Aplicar Cambios
+      - name: ✅ Aplicar Cambios Automáticamente
         run: terraform apply -auto-approve tfplan

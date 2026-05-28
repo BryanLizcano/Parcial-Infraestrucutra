@@ -29,7 +29,7 @@ jobs:
       # --- NUEVO PASO: BOOTSTRAPPING DEL BUCKET S3 ---
       - name: 🪣 Preparar Bucket S3 para Terraform State
         run: |
-          BUCKET_NAME="upb-parcial-backend-terraform-bryan"
+          BUCKET_NAME="upb-parcial-backend-terraform-bryan-1"
           
           # AWS CLI pregunta silenciosamente si el bucket ya existe
           if ! aws s3api head-bucket --bucket $BUCKET_NAME 2>/dev/null; then

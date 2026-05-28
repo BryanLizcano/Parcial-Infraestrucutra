@@ -48,18 +48,6 @@ resource "aws_subnet" "public_subnet_2" {
   tags = { Name = "Work Public Subnet 2" }
 }
 
-# ==========================================
-# Creación de Subredes Adicionales
-# ==========================================
-resource "aws_subnet" "public_subnet_2" {
-  vpc_id                  = data.aws_vpc.lab_vpc.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "${var.aws_region}b"
-  map_public_ip_on_launch = true
-
-  tags = { Name = "Work Public Subnet 2" }
-}
-
 resource "aws_route_table_association" "public_subnet_2_assoc" {
   subnet_id      = aws_subnet.public_subnet_2.id
   route_table_id = data.aws_route_table.public_rt.id

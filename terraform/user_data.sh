@@ -21,8 +21,8 @@ docker build -t demo-app .
 
 # Ejecutar el contenedor en el puerto 80, pasando las variables de entorno de tu app
 docker run -d \
+  --network host \
   --name web-app \
-  -p 80:3000 \
-  -e PORT=3000 \
+  -e PORT=80 \
   -e INSTANCE_NAME=$INSTANCE_ID \
   demo-app

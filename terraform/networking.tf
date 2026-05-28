@@ -19,23 +19,33 @@ data "aws_route_table" "public_rt" {
   }
 }
 
-# Colecciones dinámicas de subredes preexistentes
+# 1. Filtramos para estar 100% seguros de que agarramos la pública real
 data "aws_subnets" "public" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.lab_vpc.id]
-  }
-}
-
-data "aws_subnets" "private" {
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.lab_vpc.id]
   }
   filter {
     name   = "map-public-ip-on-launch"
-    values = ["false"]
+    values = ["true"] # Filtro clave añadido
   }
+}
+
+# 2. Leemos las propiedades exactas de esa subred pública de AWS
+data "aws_subnet" "existing_public" {
+  id = data.aws_subnets.public.ids[0]
+}
+
+# 3. Creamos nuestra subred garantizando una Zona de Disponibilidad DIFERENTE
+resource "aws_subnet" "public_subnet_2" {
+  vpc_id                  = data.aws_vpc.lab_vpc.id
+  cidr_block              = "10.0.1.0/24"
+  
+  availability_zone       = data.aws_subnet.existing_public.availability_zone == "${var.aws_region}a" ? "${var.aws_region}b" : "${var.aws_region}a"
+  
+  map_public_ip_on_launch = true
+
+  tags = { Name = "Work Public Subnet 2" }
 }
 
 # ==========================================
